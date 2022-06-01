@@ -1,22 +1,52 @@
-from typing import Mapping
+from typing import Union
 
-from starlette.requests import Request
+import uvicorn
+from fastapi import FastAPI
+from pydantic import BaseModel
+from starlette.middleware.cors import CORSMiddleware
 
-from fastapi import FastAPI, APIRouter, Depends
+from src.common_libs.middleware import LoggingMiddleware
+from src.common_libs.constants.settings import app_settings
+from src.common_libs.utils.logging import logger
 
-from src.common_libs.utils.logger import logger
+
+def get_application() -> FastAPI:
+    application = FastAPI(
+        title=app_settings.PROJECT_NAME,
+        debug=app_settings.DEBUG,
+        version=app_settings.VERSION
+    )
+
+    application.add_middleware(
+        CORSMiddleware,
+        allow_origins=app_settings.ALLOWED_HOSTS,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+    return application
 
 
-app = FastAPI()
-api_router = APIRouter()
+app = get_application()
+app.middleware('http')(
+    LoggingMiddleware()
+)
 
-@api_router.post("/")
-def read_root(arg: Mapping[str, str]):
-    return {"Hello": "World"}
+class Item(BaseModel):
+    name: str
+    description: Union[str, None] = None
+    price: float
+    tax: Union[float, None] = None
 
-async def log_json(request: Request):
-    request_body = await request.json()
-    logger.info(request_body)
+@app.post('/')
+async def root():
+    logger.info("Got /")
+    return {"answer": "I am Root"}
 
-# the trick here is including log_json in the dependencies:
-app.include_router(api_router, dependencies=[Depends(log_json)])
+
+@app.get('/error')
+async def error(one: int, two: int):
+    """ Example with traceback
+    """
+    logger.info(f"Got /error, {one=}, {two=}")
+    return one / two
