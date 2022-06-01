@@ -1,14 +1,12 @@
-from typing import Union
 
 import uvicorn
-from fastapi import FastAPI
-from pydantic import BaseModel
+from fastapi import FastAPI, HTTPException
 from starlette.middleware.cors import CORSMiddleware
 
 from src.common_libs.middleware import LoggingMiddleware
 from src.common_libs.constants.settings import app_settings
 from src.common_libs.utils.logging import logger
-
+from src.schemas.price_request import PriceRequest
 
 def get_application() -> FastAPI:
     application = FastAPI(
@@ -32,21 +30,41 @@ app.middleware('http')(
     LoggingMiddleware()
 )
 
-class Item(BaseModel):
-    name: str
-    description: Union[str, None] = None
-    price: float
-    tax: Union[float, None] = None
-
-@app.post('/')
+@app.get('/')
 async def root():
-    logger.info("Got /")
-    return {"answer": "I am Root"}
+    logger.info("Root Route")
+    return {"detail": "root"}
 
+@app.get('/log/info')
+async def info():
+    logger.info("Info Route")
+    return {"detail": "info"}
 
-@app.get('/error')
-async def error(one: int, two: int):
-    """ Example with traceback
-    """
-    logger.info(f"Got /error, {one=}, {two=}")
-    return one / two
+@app.get('/log/warning')
+async def warning():
+    logger.warning("Warning Route")
+    return {"detail": "warning"}
+
+@app.get('/log/error')
+async def error():
+    x = 1 / 0
+    return {"detail": "error"}
+
+@app.post('/model')
+async def prediction(price: PriceRequest):
+
+    if price.model_type == 'TABLE_LOOKUP':
+        return {
+            "model_type": "TABLE_LOOKUP",
+            "model_version": "TL100",
+            "price": 999999
+        }
+    elif price.model_type == 'ML_MODEL':
+        return {
+            "model_type": "ML_MODEL",
+            "model_version": "ML100",
+            "price": 444444
+        }
+
+    raise HTTPException(status_code=404, detail="Model Type/ Model Version not found")
+
