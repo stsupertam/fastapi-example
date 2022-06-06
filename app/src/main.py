@@ -1,12 +1,22 @@
+import random
+import uuid
+from datetime import datetime
 
-import uvicorn
-from fastapi import FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException
+from sqlalchemy.orm import Session
 from starlette.middleware.cors import CORSMiddleware
 
 from src.common_libs.middleware import LoggingMiddleware
 from src.common_libs.constants.settings import app_settings
 from src.common_libs.utils.logging import logger
 from src.schemas.price_request import PriceRequest
+from src.schemas.price_result import PriceResult
+from src.databases.operator.db_price_result import create_price_result
+from src.databases.db_config import Base, engine, get_db
+
+
+Base.metadata.create_all(bind=engine)
+
 
 def get_application() -> FastAPI:
     application = FastAPI(
@@ -51,20 +61,33 @@ async def error():
     return {"detail": "error"}
 
 @app.post('/model')
-async def prediction(price: PriceRequest):
+async def prediction(price: PriceRequest, db: Session = Depends(get_db)):
+    request_id = str(uuid.uuid1())
+    prediction_price = round(random.uniform(100000, 1000000), 2)
+    confident_score = round(random.uniform(0, 100), 2)
 
     if price.model_type == 'TABLE_LOOKUP':
-        return {
+        result = {
+            "pos_dt": datetime.now(),
+            "request_id": request_id,
             "model_type": "TABLE_LOOKUP",
-            "model_version": "TL100",
-            "price": 999999
+            "model_version": "T100",
+            "prediction_price": prediction_price,
+            "confident_score": confident_score
         }
     elif price.model_type == 'ML_MODEL':
-        return {
+        result = {
+            "pos_dt": datetime.now(),
+            "request_id": request_id,
             "model_type": "ML_MODEL",
-            "model_version": "ML100",
-            "price": 444444
+            "model_version": "M100",
+            "prediction_price": prediction_price,
+            "confident_score": confident_score
         }
+    else:
+        raise HTTPException(status_code=404, detail="Model Type/ Model Version not found")
 
-    raise HTTPException(status_code=404, detail="Model Type/ Model Version not found")
+    model = PriceResult.parse_obj(result)
+
+    return create_price_result(db, model)
 
