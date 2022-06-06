@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kubernetes.io/elb.id: 6722e210-e0cf-4854-883b-589574d3a308
+  labels:
+    app: price-poc
+    env: prod
+  name: price-poc
+  namespace: price-poc-prod
+spec:
+  ports:
+  - name: price-poc
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: price-poc
+    env: prod
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: price-poc
+    env: prod
+  name: price-poc
+  namespace: price-poc-prod
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: price-poc
+      env: prod
+  template:
+    metadata:
+      labels:
+        app: price-poc
+        env: prod
+    spec:
+      containers:
+      - image: swr.ap-southeast-2.myhuaweicloud.com/price-poc/fastapi:latest
+        imagePullPolicy: Always
+        name: price-poc
+        resources:
+          limits:
+            cpu: 800m
+            memory: 1024Mi
+          requests:
+            cpu: 400m
+            memory: 512Mi
+      imagePullSecrets:
+      - name: default-secret

@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: price-poc
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: price-poc
+          image: 'swr.ap-southeast-2.myhuaweicloud.com/price-poc/fastapi:latest'
+          imagePullPolicy: Always
+      imagePullSecrets:
+      - name: default-secret
