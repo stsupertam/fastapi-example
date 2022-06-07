@@ -51,4 +51,4 @@ async def prediction(price: PriceRequest, db: Session = Depends(get_db)):
 
     model = PriceResult.parse_obj(result)
 
-    return {"test": "test"}
+    return PriceResultCRUD.create_price_result(db, model)

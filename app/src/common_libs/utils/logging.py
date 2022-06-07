@@ -116,7 +116,13 @@ class JSONLogFormatter(logging.Formatter):
 
         return json_log_object
 
+def handlers(env):
+    if env.lower() in ('prod', 'dev'):
+        return ['json']
+    else:
+        return ['intercept']
 
+LOG_HANDLER = handlers(app_settings.ENVIRONMENT)
 LOGGING_LEVEL = logging.DEBUG if app_settings.DEBUG else logging.INFO
 
 LOG_CONFIG = {
@@ -149,7 +155,7 @@ LOG_CONFIG = {
             'propagate': False,
         },
         'uvicorn.access': {
-            'handlers': ['json'],
+            'handlers': LOG_HANDLER,
             'level': 'ERROR',
             'propagate': False,
         },

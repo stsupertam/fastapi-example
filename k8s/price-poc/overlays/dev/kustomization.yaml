@@ -6,6 +6,11 @@ resources:
 
 namespace: price-poc-dev
 
+secretGenerator:
+- name: price-db-dev
+  envs:
+  - .env.secret
+
 commonLabels:
   app: price-poc
   env: dev
