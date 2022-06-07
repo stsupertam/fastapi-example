@@ -125,43 +125,43 @@ def handlers(env):
 LOG_HANDLER = handlers(app_settings.ENVIRONMENT)
 LOGGING_LEVEL = logging.DEBUG if app_settings.DEBUG else logging.INFO
 
-# LOG_CONFIG = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'formatters': {
-#         'json': {
-#             '()': JSONLogFormatter,
-#         },
-#     },
-#     'handlers': {
-#         'json': {
-#             'formatter': 'json',
-#             'class': 'logging.StreamHandler',
-#             'stream': sys.stdout,
-#         },
-#         'intercept': {
-#             '()': InterceptHandler,
-#         },
-#     },
-#     'loggers': {
-#         'main': {
-#             'handlers': ['json'],
-#             'level': LOGGING_LEVEL,
-#             'propagate': False,
-#         },
-#         'uvicorn': {
-#             'handlers': ['json'],
-#             'level': 'INFO',
-#             'propagate': False,
-#         },
-#         'uvicorn.access': {
-#             'handlers': LOG_HANDLER,
-#             'level': 'ERROR',
-#             'propagate': False,
-#         },
-#     },
-# }
+LOG_CONFIG = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'json': {
+            '()': JSONLogFormatter,
+        },
+    },
+    'handlers': {
+        'json': {
+            'formatter': 'json',
+            'class': 'logging.StreamHandler',
+            'stream': sys.stdout,
+        },
+        'intercept': {
+            '()': InterceptHandler,
+        },
+    },
+    'loggers': {
+        'main': {
+            'handlers': ['json'],
+            'level': LOGGING_LEVEL,
+            'propagate': False,
+        },
+        'uvicorn': {
+            'handlers': ['json'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'uvicorn.access': {
+            'handlers': LOG_HANDLER,
+            'level': 'ERROR',
+            'propagate': False,
+        },
+    },
+}
 
 
-# dictConfig(LOG_CONFIG)
+dictConfig(LOG_CONFIG)
 logger = logging.getLogger('main')

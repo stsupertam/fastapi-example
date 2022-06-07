@@ -18,9 +18,9 @@ router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
-# @router.get('/result/{pred_req_id}')
-# async def prediction(pred_req_id: str, db: Any = Depends(get_db)):
-#     return PriceResultCRUD.get_price_result_by_id(db, pred_req_id)
+@router.get('/result/{pred_req_id}')
+async def prediction(pred_req_id: str):
+    return await PriceResultCRUD.get_price_result_by_id(pred_req_id)
 
 @router.post('/prediction')
 async def prediction(price: PriceRequest):

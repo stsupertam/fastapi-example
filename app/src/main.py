@@ -34,9 +34,9 @@ def get_application() -> FastAPI:
 
 
 app = get_application()
-# app.middleware('http')(
-#     LoggingMiddleware()
-# )
+app.middleware('http')(
+    LoggingMiddleware()
+)
 app.include_router(api_router)
 
 @app.on_event("startup")

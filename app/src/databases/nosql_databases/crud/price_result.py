@@ -1,7 +1,5 @@
 from datetime import datetime
 
-from sqlalchemy.orm import Session
-
 from src.schemas.price_result import PriceResult as PriceResultSchema
 from src.databases.nosql_databases.models import PriceResult as PriceResultModel
 
@@ -20,6 +18,6 @@ class PriceResultCRUD:
         await db_price.create()
         return db_price
 
-    # @staticmethod
-    # def get_price_result_by_id(db: Session, request_id: str):
-    #     return db.query(PriceResultModel).filter(PriceResultModel.request_id == request_id).first()
+    @staticmethod
+    async def get_price_result_by_id(request_id: str):
+        return await PriceResultModel.find_one(PriceResultModel.request_id == request_id)
