@@ -8,3 +8,5 @@ pymongo==3.12
 SQLAlchemy
 PyMySQL
 beanie==1.11.0
+databases==0.6.0
+aiomysql

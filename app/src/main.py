@@ -8,7 +8,7 @@ from starlette.middleware.cors import CORSMiddleware
 from src.common_libs.middleware import LoggingMiddleware
 from src.common_libs.constants.settings import app_settings
 from src.common_libs.utils.logging import logger
-from src.databases.sql_databases.db_config import Base, engine, get_db
+from src.databases.sql_databases.db_config import Base, engine, database as sql_db
 from src.databases.nosql_databases.db_config import init_db as nosql_init
 from src.routers.api import router as api_router
 
@@ -34,14 +34,19 @@ def get_application() -> FastAPI:
 
 
 app = get_application()
-app.middleware('http')(
-    LoggingMiddleware()
-)
+# app.middleware('http')(
+#     LoggingMiddleware()
+# )
 app.include_router(api_router)
 
 @app.on_event("startup")
 async def start_db():
     await nosql_init()
+    await sql_db.connect()
+
+@app.on_event("shutdown")
+async def shutdown():
+    await sql_db.disconnect()
 
 @app.get('/')
 async def root():

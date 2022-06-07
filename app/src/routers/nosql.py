@@ -11,7 +11,6 @@ from sqlalchemy.orm import Session
 from src.schemas.price_request import PriceRequest
 from src.schemas.price_result import PriceResult
 from src.databases.nosql_databases.crud.price_result import PriceResultCRUD
-# from src.databases.nosql_databases.db_config import get_db
 
 #APIRouter creates path operations for user module
 router = APIRouter(
