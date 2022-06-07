@@ -1,7 +1,7 @@
 from sqlalchemy import Boolean, Column, Float, Integer, String, DateTime
 from sqlalchemy.orm import relationship
 
-from src.sql_databases.db_config import Base
+from src.databases.sql_databases.db_config import Base
 
 class PriceResult(Base):
     __tablename__ = "prediction_result"

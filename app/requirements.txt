@@ -3,5 +3,7 @@ pydantic>=1.8.0,<2.0.0
 uvicorn>=0.15.0,<0.16.0
 loguru==0.6.0
 stackprinter==0.2.6
+motor==2.5.1
+pymongo==3.12
 SQLAlchemy
 PyMySQL

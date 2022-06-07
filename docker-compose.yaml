@@ -10,8 +10,14 @@ services:
     volumes:
       - "./app:/app"
     environment:
-      DB_HOST: ${DB_HOST}
-      DB_PORT: ${DB_PORT}
-      DB_NAME: ${DB_NAME}
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
+      SQL_DB_HOST: ${SQL_DB_HOST}
+      SQL_DB_PORT: ${SQL_DB_PORT}
+      SQL_DB_NAME: ${SQL_DB_NAME}
+      SQL_DB_USER: ${SQL_DB_USER}
+      SQL_DB_PASSWORD: ${SQL_DB_PASSWORD}
+
+      NOSQL_DB_HOST: ${NOSQL_DB_HOST}
+      NOSQL_DB_PORT: ${NOSQL_DB_PORT}
+      NOSQL_DB_NAME: ${NOSQL_DB_NAME}
+      NOSQL_DB_USER: ${NOSQL_DB_USER}
+      NOSQL_DB_PASSWORD: ${NOSQL_DB_PASSWORD}

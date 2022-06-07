@@ -10,7 +10,7 @@ from src.common_libs.constants.settings import app_settings
 from src.common_libs.utils.logging import logger
 from src.routers.api import router as api_router
 
-from src.sql_databases.db_config import Base, engine, get_db
+from src.databases.sql_databases.db_config import Base, engine, get_db
 
 
 Base.metadata.create_all(bind=engine)

@@ -1,5 +1,6 @@
 import random
 import uuid
+from typing import Any
 
 from datetime import datetime
 
@@ -9,21 +10,21 @@ from sqlalchemy.orm import Session
 
 from src.schemas.price_request import PriceRequest
 from src.schemas.price_result import PriceResult
-from src.databases.sql_databases.crud.price_result import PriceResultCRUD
-from src.databases.sql_databases.db_config import get_db
+from src.databases.nosql_databases.crud.price_result import PriceResultCRUD
+from src.databases.nosql_databases.db_config import get_db
 
 #APIRouter creates path operations for user module
 router = APIRouter(
-    prefix="/sql",
+    prefix="/nosql",
     responses={404: {"description": "Not found"}},
 )
 
 @router.get('/result/{pred_req_id}')
-async def prediction(pred_req_id: str, db: Session = Depends(get_db)):
+async def prediction(pred_req_id: str, db: Any = Depends(get_db)):
     return PriceResultCRUD.get_price_result_by_id(db, pred_req_id)
 
 @router.post('/prediction')
-async def prediction(price: PriceRequest, db: Session = Depends(get_db)):
+async def prediction(price: PriceRequest, db: Any = Depends(get_db)):
     request_id = str(uuid.uuid1())
     prediction_price = round(random.uniform(100000, 1000000), 2)
     confident_score = round(random.uniform(0, 100), 2)
@@ -51,4 +52,4 @@ async def prediction(price: PriceRequest, db: Session = Depends(get_db)):
 
     model = PriceResult.parse_obj(result)
 
-    return {"test": "test"}
+    return PriceResultCRUD.create_price_result(db, model)
