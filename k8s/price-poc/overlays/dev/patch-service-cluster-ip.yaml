@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: price-poc
+  name: price-poc
+spec:
+  ports:
+  - name: price-poc
+    port: 8080                # Port for accessing a Service.
+    protocol: TCP             # Protocol used for accessing a Service. The value can be TCP or UDP.
+    targetPort: 8080            # Port used by a Service to access the target container. This port is closely related to the applications running in a container. In this example, the Nginx image uses port 80 by default.
+  selector:                   # Label selector. A Service selects a pod based on the label and forwards the requests for accessing the Service to the pod. In this example, select the pod with the app:nginx label.
+    app: nginx
+  type: ClusterIP             # Type of a Service. ClusterIP indicates that a Service is only reachable from within the cluster.

@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  labels:
+    app: price-poc
+  name: price-poc
+spec:
+  rules:
+    - host: 'poc-prod.santitham.me'
+      http:
+        paths:
+          - path: /
+            backend:
+              service:
+                name: price-poc  # Replace it with the name of your target Service.
+                port:
+                  number: 8080  # Replace 8080 with the port number of your target Service.
+            property:
+              ingress.beta.kubernetes.io/url-match-mode: STARTS_WITH
+            pathType: ImplementationSpecific
+  ingressClassName: nginx    # Nginx ingress is used.

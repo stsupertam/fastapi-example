@@ -4,12 +4,12 @@ metadata:
   labels:
     app: price-poc
   name: price-poc
-spec: 
-  ports: 
-  - name: price-poc
-    port: 8080
-    protocol: TCP 
-    targetPort: 8080
-  selector: 
-    app: price-poc 
-  type: LoadBalancer
+# spec: 
+#   ports: 
+#   - name: price-poc
+#     port: 8080
+#     protocol: TCP 
+#     targetPort: 8080
+#   selector: 
+#     app: price-poc 
+#   type: LoadBalancer

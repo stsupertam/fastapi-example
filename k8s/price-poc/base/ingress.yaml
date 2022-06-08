@@ -1,0 +1,9 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  labels:
+    app: price-poc
+  name: price-poc
+  annotations:
+    kubernetes.io/elb.port: '80'
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: '5'
