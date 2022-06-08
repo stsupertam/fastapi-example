@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: price-poc
+  name: price-poc
+spec:
+  template:
+    spec:
+      containers:
+        - name: price-poc
+          env:
+            - name: SQL_DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: price-db-prod
+                  key: SQL_DB_HOST
+            - name: SQL_DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: price-db-prod
+                  key: SQL_DB_PORT
+            - name: SQL_DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: price-db-prod
+                  key: SQL_DB_NAME
+            - name: SQL_DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: price-db-prod
+                  key: SQL_DB_USER
+            - name: SQL_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: price-db-prod
+                  key: SQL_DB_PASSWORD
+            - name: NOSQL_DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: price-db-prod
+                  key: SQL_DB_HOST
+            - name: SQL_DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: price-db-prod
+                  key: NOSQL_DB_PORT
+            - name: NOSQL_DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: price-db-prod
+                  key: SQL_DB_NAME
+            - name: NOSQL_DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: price-db-prod
+                  key: SQL_DB_USER
+            - name: NOSQL_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: price-db-prod
+                  key: NOSQL_DB_PASSWORD

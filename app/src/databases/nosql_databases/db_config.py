@@ -12,7 +12,7 @@ DB_NAME = os.getenv('NOSQL_DB_NAME')
 DB_USER = os.getenv('NOSQL_DB_USER')
 DB_PASSWORD = os.getenv('NOSQL_DB_PASSWORD')
 
-MONGODB_URI = f"mongodb://{DB_USER}:%s@{DB_HOST}:{DB_PORT}/?authSource=admin"
+MONGODB_URI = f"mongodb://{DB_USER}:%s@{DB_HOST}:{DB_PORT}/{DB_NAME}?authSource=admin"
 
 async def init_db():
     client = motor.motor_asyncio.AsyncIOMotorClient(
