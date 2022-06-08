@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kubernetes.io/elb.id: ce6807da-7014-4b42-96dd-5feecc3bab75 # Load balancer ID. Replace it with the actual value.
+  labels:
+    app: price-poc
+  name: price-poc

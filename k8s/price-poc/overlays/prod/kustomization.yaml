@@ -13,3 +13,4 @@ commonLabels:
 patchesStrategicMerge:
   - patch-resources.yaml
   - patch-db-env.yaml
+  - patch-service.yaml

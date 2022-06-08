@@ -39,8 +39,8 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: price-db-prod
-                  key: SQL_DB_HOST
-            - name: SQL_DB_PORT
+                  key: NOSQL_DB_HOST
+            - name: NOSQL_DB_PORT
               valueFrom:
                 secretKeyRef:
                   name: price-db-prod
@@ -49,12 +49,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: price-db-prod
-                  key: SQL_DB_NAME
+                  key: NOSQL_DB_NAME
             - name: NOSQL_DB_USER
               valueFrom:
                 secretKeyRef:
                   name: price-db-prod
-                  key: SQL_DB_USER
+                  key: NOSQL_DB_USER
             - name: NOSQL_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
