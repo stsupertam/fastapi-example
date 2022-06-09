@@ -6,12 +6,6 @@ resources:
 
 namespace: price-poc-dev
 
-# setting env for config
-# secretGenerator:
-# - name: price-db-dev
-#   envs:
-#   - dev.env
-
 commonLabels:
   app: price-poc
   env: dev
@@ -19,6 +13,6 @@ commonLabels:
 patchesStrategicMerge:
   - patch-resources.yaml
   - patch-db-env.yaml
-  - patch-service-cluster-ip.yaml
+  # - patch-service-cluster-ip.yaml
   - patch-ingress.yaml
-  # - patch-service.yaml
+  - patch-service.yaml

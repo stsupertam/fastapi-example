@@ -10,3 +10,5 @@ PyMySQL
 beanie==1.11.0
 databases==0.6.0
 aiomysql
+esdk-obs-python==3.22.2
+pycryptodome==3.10.1
