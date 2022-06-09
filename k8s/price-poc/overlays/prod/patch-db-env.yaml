@@ -60,3 +60,29 @@ spec:
                 secretKeyRef:
                   name: price-db-prod
                   key: NOSQL_DB_PASSWORD
+
+            - name: OBS_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: price-db-prod
+                  key: OBS_ACCESS_KEY
+            - name: OBS_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: price-db-prod
+                  key: OBS_SECRET_KEY
+            - name: OBS_END_POINT
+              valueFrom:
+                secretKeyRef:
+                  name: price-db-prod
+                  key: OBS_END_POINT
+            - name: OBS_BUCKET_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: price-db-prod
+                  key: OBS_BUCKET_NAME
+            - name: OBS_TEST_FILE
+              valueFrom:
+                secretKeyRef:
+                  name: price-db-prod
+                  key: OBS_TEST_FILE

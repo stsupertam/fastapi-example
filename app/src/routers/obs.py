@@ -37,7 +37,7 @@ router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
-@router.get('/')
+@router.get('/prediction')
 async def prediction(obs: ObsClient = Depends(get_obs)):
     json_result = None
     try:

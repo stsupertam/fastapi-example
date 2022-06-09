@@ -10,6 +10,7 @@ spec:
       containers:
         - name: price-poc
           env:
+
             - name: SQL_DB_HOST
               valueFrom:
                 secretKeyRef:
@@ -35,6 +36,7 @@ spec:
                 secretKeyRef:
                   name: price-db-dev
                   key: SQL_DB_PASSWORD
+
             - name: NOSQL_DB_HOST
               valueFrom:
                 secretKeyRef:
@@ -60,3 +62,29 @@ spec:
                 secretKeyRef:
                   name: price-db-dev
                   key: NOSQL_DB_PASSWORD
+
+            - name: OBS_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: price-db-dev
+                  key: OBS_ACCESS_KEY
+            - name: OBS_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: price-db-dev
+                  key: OBS_SECRET_KEY
+            - name: OBS_END_POINT
+              valueFrom:
+                secretKeyRef:
+                  name: price-db-dev
+                  key: OBS_END_POINT
+            - name: OBS_BUCKET_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: price-db-dev
+                  key: OBS_BUCKET_NAME
+            - name: OBS_TEST_FILE
+              valueFrom:
+                secretKeyRef:
+                  name: price-db-dev
+                  key: OBS_TEST_FILE
